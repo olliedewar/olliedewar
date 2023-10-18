@@ -67,7 +67,7 @@ public class BirthdayInfoRetriever {
         frame.add(art);
 
         /** set the frame size and close operation **/
-        frame.setSize(640, 800);
+        frame.setSize(518, 735);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         /** make frame visible **/
