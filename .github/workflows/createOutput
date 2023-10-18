@@ -39,7 +39,7 @@ public class createOutput extends JPanel {
 
         /** JPanel width/height **/
         int maxX = 640;
-        int maxY = 1188;
+        int maxY = 800;
         int min = 0;
 
         /** create 2D graphics **/
