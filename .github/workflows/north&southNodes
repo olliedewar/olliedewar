@@ -1,0 +1,122 @@
+import java.util.*;
+import java.io.*;
+import java.text.*;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/*** creates and returns list of planet signs ***/
+public class Node {
+    /** constants **/
+    private static final String[] NODE_NAMES = {
+            "northNode", "southNode"
+        };
+    List<String> nodes = new ArrayList<>();
+    SimpleDateFormat file;
+
+    public Node() {
+        file = new SimpleDateFormat("MMM dd, yyyy");
+    }
+
+    /** return list of node signs **/
+    public List<String> getNodes(String userBirthday) {
+        nodes.clear();
+        Date formatted = new Date();
+
+        try {
+            /** format userBirthday for file reading **/
+            String formattedDate = convertDateFormat(userBirthday);
+            try
+            {
+                formatted = file.parse(formattedDate);
+            }
+            catch (ParseException pe)
+            {
+                pe.printStackTrace();
+            }
+            //System.out.println("Converted date is " + formattedDate); //debug
+
+            /** loop through node files **/
+            for (String n : NODE_NAMES){
+                nodes.add(readFile(formatted, n));
+                //System.out.println(n);  //debug
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return nodes;
+    }
+
+    /** format input data **/
+    public String convertDateFormat(String userBirthday) {
+        try {
+            /** parse input date string **/
+            SimpleDateFormat user = new SimpleDateFormat("yyyy-MM-dd");
+            Date userDate = user.parse(userBirthday);
+            String formattedDate = file.format(userDate);
+            //System.out.println("Formatted Date: " + formattedDate);     //debug
+            return formattedDate;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /** read node files **/
+    public String readFile(Date userBirthday, String node) throws IOException {
+        String sign = "";
+        String returnString = "";
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(
+                        "/Users/olliedewar/Desktop/uni/Massey/Coding for Creative Practices/Assignment 2/" + node + ".txt"));
+            String line;
+
+            /** look for sign **/
+            while ((line = reader.readLine()) != null) {
+                //System.out.println(line); //debug
+                String[] parts = line.split("\t");
+                String part = parts[0];
+                //System.out.println(parts[0]); //debug
+                //System.out.println(parts[1]); //debug
+                
+                if (parts.length >= 2) {
+                    try {
+                        Date date = file.parse(part);
+
+                        /** if before, store sign **/
+                        if (date.before(userBirthday)) {sign = parts[1];}
+
+                        /** if after, break **/
+                        if(date.after(userBirthday)) {
+                            if (node.equals("northNode")){
+                                //System.out.println("North node found"); //debug
+                                returnString = "North node: " + sign;
+                                break;
+                            }
+                            if (node.equals("southNode")) {
+                                //System.out.println("South node found"); //debug
+                                returnString = "South node: " + sign;
+                                break;
+                            }
+                        }
+                    }
+                    catch (ParseException pe) {
+                        pe.printStackTrace();
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        /** null/empty string check **/
+        if (returnString != null && !returnString.isEmpty()) {
+            return returnString;
+        } else {
+            return "No information available for your " + node + " sign.";
+        }
+    }
+}
