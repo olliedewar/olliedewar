@@ -1,0 +1,249 @@
+import java.awt.*;
+import java.awt.geom.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.text.*;
+import java.util.*;
+import javax.swing.*;
+import java.awt.Color;
+
+/** creates star chart artwork **/
+public class createOutput extends JPanel {
+    /** variables **/
+    private String userBirthday;
+    private java.util.List<String> allSigns;
+    int circles;
+    int year;
+    Random r = new Random(); 
+
+    /** colours **/
+    Color aries = new Color(255, 0, 0); //red
+    Color taurus = new Color(102, 204, 0); //green
+    Color gemini = new Color(255, 255, 0); //yellow
+    Color cancer = new Color(128, 128, 128); //silver
+    Color leo = new Color(255, 215, 0); //gold
+    Color virgo = new Color(150, 75, 0); //brown
+    Color libra = new Color(255, 102, 178); //pink
+    Color scorpio = new Color(0, 0, 0); //black
+    Color sagittarius = new Color(153, 0, 153); //purple
+    Color capricorn = new Color(192, 192, 192); //grey
+    Color aquarius = new Color(0, 128, 255); //blue
+    Color pisces = new Color(178, 255, 102); //light green
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Color color = new Color(0, 0, 0);
+        int size = 20;
+        int loopCount = 12;
+
+        /** JPanel width/height **/
+        int maxX = 1748;
+        int maxY = 2480;
+        int min = 0;
+
+        /** create 2D graphics **/
+        Graphics2D g2d = (Graphics2D) g;
+
+        /** set line width **/
+        float thickness = 4;
+        g2d.setStroke(new BasicStroke(thickness));
+
+        /** font size and style **/
+        Font font = new Font("Arial", Font.PLAIN, 50); 
+        g2d.setFont(font);
+        int xText = 50; 
+        int yText = 50; 
+
+        /** set background colour **/
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
+
+        /** loop through star chart and draw relevant circles **/
+        for(String s : allSigns){
+            /** assign circle color **/
+            //System.out.println(s);   //debug
+            size = loopCount * 40;
+
+            String line[] = s.split(" ");
+            String sign;
+            if(line.length > 2){
+                sign = line[2];
+                //System.out.println("node checked: " + sign);   //debug
+            }else sign = line[1];
+            //System.out.println(sign);   //debug
+
+            if(sign.equals("Aries")){ 
+                g2d.setColor(aries);
+
+                for(int j = 0; j < circles; j++){
+                    int x = r.nextInt(maxX - min + 1);
+                    int y = r.nextInt(maxY - min + 1);
+                    //System.out.println("x: " + x + " y: " + y);
+
+                    g2d.drawOval(x, y, size, size);
+                }
+            }else if(sign.equals("Taurus")){
+                g2d.setColor(taurus);
+
+                for(int j = 0; j < circles; j++){
+                    int x = r.nextInt(maxX - min + 1);
+                    int y = r.nextInt(maxY - min + 1);
+                    //System.out.println("x: " + x + " y: " + y);
+
+                    g2d.drawOval(x, y, size, size);
+                }
+            }else if(sign.equals("Gemini")){
+                g2d.setColor(gemini);
+                //System.out.println("made it");
+                for(int j = 0; j < circles; j++){
+                    int x = r.nextInt(maxX - min + 1);
+                    int y = r.nextInt(maxY - min + 1);
+                    //System.out.println("x: " + x + " y: " + y);
+
+                    g2d.drawOval(x, y, size, size);
+                }
+            }else if(sign.equals("Cancer")){
+                g2d.setColor(cancer);
+
+                for(int j = 0; j < circles; j++){
+                    int x = r.nextInt(maxX - min + 1);
+                    int y = r.nextInt(maxY - min + 1);
+                    //System.out.println("x: " + x + " y: " + y);
+
+                    g2d.drawOval(x, y, size, size);
+                }
+            }else if(sign.equals("Leo")){
+                g2d.setColor(leo);
+
+                for(int j = 0; j < circles; j++){
+                    int x = r.nextInt(maxX - min + 1);
+                    int y = r.nextInt(maxY - min + 1);
+                    //System.out.println("x: " + x + " y: " + y);
+
+                    g2d.drawOval(x, y, size, size);
+                }
+            }else if(sign.equals("Virgo")){
+                g2d.setColor(virgo);
+
+                for(int j = 0; j < circles; j++){
+                    int x = r.nextInt(maxX - min + 1);
+                    int y = r.nextInt(maxY - min + 1);
+                    //System.out.println("x: " + x + " y: " + y);
+
+                    g2d.drawOval(x, y, size, size);
+                }
+            }else if(sign.equals("Libra")){
+                g2d.setColor(libra);
+
+                for(int j = 0; j < circles; j++){
+                    int x = r.nextInt(maxX - min + 1);
+                    int y = r.nextInt(maxY - min + 1);
+                    //System.out.println("x: " + x + " y: " + y);
+
+                    g2d.drawOval(x, y, size, size);
+                }
+            }else if(sign.equals("Scorpio")){
+                g2d.setColor(scorpio);
+
+                for(int j = 0; j < circles; j++){
+                    int x = r.nextInt(maxX - min + 1);
+                    int y = r.nextInt(maxY - min + 1);
+                    //System.out.println("x: " + x + " y: " + y);
+
+                    g2d.drawOval(x, y, size, size);
+                }
+            }else if(sign.equals("Sagittarius")){
+                g2d.setColor(sagittarius);
+
+                for(int j = 0; j < circles; j++){
+                    int x = r.nextInt(maxX - min + 1);
+                    int y = r.nextInt(maxY - min + 1);
+                    //System.out.println("x: " + x + " y: " + y);
+
+                    g2d.drawOval(x, y, size, size);
+                }
+            }else if(sign.equals("Capricorn")){
+                g2d.setColor(capricorn);
+
+                for(int j = 0; j < circles; j++){
+                    int x = r.nextInt(maxX - min + 1);
+                    int y = r.nextInt(maxY - min + 1);
+                    //System.out.println("x: " + x + " y: " + y);
+
+                    g2d.drawOval(x, y, size, size);
+                }
+            }else if(sign.equals("Aquarius")){
+                g2d.setColor(aquarius);
+
+                for(int j = 0; j < circles; j++){
+                    int x = r.nextInt(maxX - min + 1);
+                    int y = r.nextInt(maxY - min + 1);
+                    //System.out.println("x: " + x + " y: " + y);
+
+                    g2d.drawOval(x, y, size, size);
+                }
+            }else if(sign.equals("Pisces")){
+                g2d.setColor(pisces);
+
+                for(int j = 0; j < circles; j++){
+                    int x = r.nextInt(maxX - min + 1);
+                    int y = r.nextInt(maxY - min + 1);
+                    //System.out.println("x: " + x + " y: " + y);
+
+                    g2d.drawOval(x, y, size, size);
+                }
+            }
+            loopCount--;
+        }
+
+        for(String s : allSigns){
+            /** add text and rectangle **/
+            g2d.setColor(Color.WHITE);
+            yText = yText + 64;
+            String text = s;
+            FontMetrics fm = g2d.getFontMetrics();
+            int textWidth = fm.stringWidth(text);
+            int textHeight = fm.getHeight() + 5;
+            int rectX = xText - 5; // set x
+            int rectY = yText - textHeight + 10; // set y
+            int rectWidth = textWidth + 10; // adjust width
+            int rectHeight = textHeight; // set height
+
+            g2d.fillRect(rectX, rectY, rectWidth, rectHeight); // draw rectangle
+
+            g2d.setColor(Color.BLACK); 
+            g2d.drawString(text, xText, yText);
+        }
+    }
+
+    public void createArt(String userBirthday, java.util.List<String> allSigns) {
+        this.userBirthday = userBirthday;
+        this.allSigns = allSigns;
+
+        int low = 19;
+        int high = 7440;
+        int low2 = 20;
+        int high2 = 80;
+
+        String[] dmy = userBirthday.split("-"); //split yyyy-mm-dd into (yyyy)(mm)(dd)
+        int day = Integer.parseInt(dmy[2]);
+        int month = Integer.parseInt(dmy[1]);
+        year = Integer.parseInt(dmy[0]);
+        //System.out.println(day);   //debug
+
+        if(year >= 2000){
+            circles = day * month * 20;
+        }else
+            circles = day * month * 19;
+        //System.out.println("cirles: " + circles);   //debug
+
+        int relativeC = (day - low)/(high - low);
+        //System.out.println("relativeC: " + relativeC); //debug
+        circles = low2 + relativeC * (high2 - low2);
+        //System.out.println("circles: " + circles); //debug
+
+        /** trigger paintComponent **/
+        repaint();
+    }
+}
