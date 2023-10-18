@@ -1,0 +1,99 @@
+import java.io.*;
+import java.text.*;
+import java.util.*;
+import javax.swing.*;
+
+public class BirthdayInfoRetriever {
+    public static void main(String[] args) throws ParseException {
+        boolean continueLoop = true; //flag to control the loop (debug)
+
+        java.util.List<String> allSigns = new ArrayList();
+
+        while (continueLoop) {
+            /** ask user for birthday **/
+            String userBirthday = getUserInput("Please enter your birthday (yyyy-MM-dd): ");
+
+            /** get sun sign **/
+            Sun sun = new Sun();
+            String sunSign = sun.determineSunSign(userBirthday);
+
+            /** add to sign list and print **/
+            String print = "Sun: " + sunSign;
+            System.out.println(print);
+
+            /** get moon sign **/
+            Moon moon = new Moon();
+            List<String> moonPhases = moon.getMoonPhases(userBirthday);
+            String sign = "";
+            for (String phase : moonPhases) {
+                sign = sign.concat(phase);
+            }
+            print = "Moon: " + sign;
+
+            /** add to sign list and print **/
+            allSigns.add(print);
+            System.out.println(print);
+
+            /** get planet signs **/
+            Planet planets = new Planet();
+            List<String> planetPhases = planets.getPlanets(userBirthday);
+            //System.out.println("Planets:"); //debug
+            for (String planet : planetPhases) {
+
+                //add to sign list and print
+                allSigns.add(planet);
+                System.out.println(planet);
+            }
+
+            /** get north & south nodes **/
+            Node node = new Node();
+            List<String> nodePhases = node.getNodes(userBirthday);
+            for (String n : nodePhases) {
+                //add to sign list and print
+                allSigns.add(n);
+                System.out.println(n);
+            }
+
+            /** create output (calls method) **/
+            createOutput art = new createOutput();
+            art.createArt(userBirthday, allSigns);
+
+            /** creates a JFrame **/
+            JFrame frame = new JFrame("Star chart poster");
+
+            /** set opening location of JFrame **/
+            int x = 600; // X-coordinate
+            int y = 600; // Y-coordinate
+            frame.setLocation(x, y);
+
+            /** add outputPanel to frame **/
+            frame.add(art);
+
+            /** set the frame size and close operation **/
+            frame.setSize(640, 1188);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            /** make frame visible **/
+            frame.setVisible(true);
+
+            /** ask the user if they want to continue **/
+            String continueInput = getUserInput("Do you want to enter another birthday? (yes/no): ");
+
+            /** process input **/
+            if (!continueInput.equalsIgnoreCase("yes")) {
+                continueLoop = false; //exit if anything but yes
+            }
+        }
+    }
+
+    private static String getUserInput(String prompt) {
+        System.out.print(prompt);
+        try {
+            BufferedReader reader = new BufferedReader(new java.io.InputStreamReader(System.in));
+            return reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+}
