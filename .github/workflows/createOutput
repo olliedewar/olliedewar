@@ -34,23 +34,23 @@ public class createOutput extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Color color = new Color(0, 0, 0);
-        int size = 20;
+        int size;
         int loopCount = 12;
 
         /** JPanel width/height **/
-        int maxX = 640;
-        int maxY = 800;
+        int maxX = 518;
+        int maxY = 735;
         int min = 0;
 
         /** create 2D graphics **/
         Graphics2D g2d = (Graphics2D) g;
 
         /** set line width **/
-        float thickness = 4;
+        float thickness = 1;
         g2d.setStroke(new BasicStroke(thickness));
 
         /** font size and style **/
-        Font font = new Font("Arial", Font.PLAIN, 20); 
+        Font font = new Font("Arial", Font.PLAIN, 15); 
         g2d.setFont(font);
         int xText = 20; 
         int yText = 10; 
@@ -63,7 +63,7 @@ public class createOutput extends JPanel {
         for(String s : allSigns){
             /** assign circle color **/
             //System.out.println(s);   //debug
-            size = loopCount * 40;
+            size = loopCount * 10;
 
             String line[] = s.split(" ");
             String sign;
@@ -200,7 +200,7 @@ public class createOutput extends JPanel {
         for(String s : allSigns){
             /** add text and rectangle **/
             g2d.setColor(Color.WHITE);
-            yText = yText + 24;
+            yText = yText + 18;
             String text = s;
             FontMetrics fm = g2d.getFontMetrics();
             int textWidth = fm.stringWidth(text);
