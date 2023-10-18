@@ -1,0 +1,102 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+
+/*** returns moon sign ***/
+
+public class Moon {
+    public List<String> getMoonPhases(String userBirthday) {
+        List<String> relevantPhases = new ArrayList<>();
+        String[] getYear = userBirthday.split("-");
+        String year = getYear[0];
+        //System.out.println(year);  //debug
+
+        try (BufferedReader temp = new BufferedReader(new FileReader("/Users/olliedewar/Desktop/uni/Massey/Coding for Creative Practices/Assignment 2/" + year + ".txt"))) {
+            String line;
+            
+            //find and return file
+            BufferedReader reader = findFile(year, temp);
+
+            //parse the user's input date
+            SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date userDate = inputDateFormat.parse(userBirthday);
+
+            //format the user's date to "MMM-dd" format
+            SimpleDateFormat moonFileDateFormat = new SimpleDateFormat("MMM-dd");
+            String formattedUserDate = moonFileDateFormat.format(userDate);
+
+            while ((line = reader.readLine()) != null) {
+                //split line by tab to find sign
+                String[] parts = line.split("\t");
+
+                //check line has at least 3 parts (date, phase, and zodiac sign)
+                if (parts.length >= 3) {
+                    String date = parts[0];
+                    //System.out.println("Date from file: " + date); //debug
+                    //System.out.println("Formatted User Date: " + formattedUserDate); //debug
+                    //System.out.println("Processing line: " + line);   //debug
+
+                    //return match
+                    if (date.equals(formattedUserDate)) {
+                        String relevantInfo = parts[2];
+                        //System.out.println("Match found: " + relevantInfo); //debug
+                        relevantPhases.add(relevantInfo);
+                    }
+                }
+            }
+
+            reader.close();
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
+        return relevantPhases;
+    }
+    
+    public BufferedReader findFile(String year, BufferedReader reader) throws java.io.FileNotFoundException {
+        if(year.equals("1995")){
+            return reader;
+        }
+        if(year.equals("1996")){
+            reader = new BufferedReader(new FileReader("/Users/olliedewar/Desktop/uni/Massey/Coding for Creative Practices/Assignment 2/1996.txt"));
+            return reader;
+        }
+        if(year.equals("1997")){
+            reader = new BufferedReader(new FileReader("/Users/olliedewar/Desktop/uni/Massey/Coding for Creative Practices/Assignment 2/1997.txt"));
+            return reader;
+        }
+        if(year.equals("1998")){
+            reader = new BufferedReader(new FileReader("/Users/olliedewar/Desktop/uni/Massey/Coding for Creative Practices/Assignment 2/1998.txt"));
+            return reader;
+        }
+        if(year.equals("1999")){
+            reader = new BufferedReader(new FileReader("/Users/olliedewar/Desktop/uni/Massey/Coding for Creative Practices/Assignment 2/1999.txt"));
+            return reader;
+        }
+        if(year.equals("2000")){
+            reader = new BufferedReader(new FileReader("/Users/olliedewar/Desktop/uni/Massey/Coding for Creative Practices/Assignment 2/2000.txt"));
+            return reader;
+        }
+        if(year.equals("2001")){
+            reader = new BufferedReader(new FileReader("/Users/olliedewar/Desktop/uni/Massey/Coding for Creative Practices/Assignment 2/2001.txt"));
+            return reader;
+        }
+        if(year.equals("2002")){
+            reader = new BufferedReader(new FileReader("/Users/olliedewar/Desktop/uni/Massey/Coding for Creative Practices/Assignment 2/2002.txt"));
+            return reader;
+        }
+        if(year.equals("2003")){
+            reader = new BufferedReader(new FileReader("/Users/olliedewar/Desktop/uni/Massey/Coding for Creative Practices/Assignment 2/2003.txt"));
+            return reader;
+        }
+        if(year.equals("2004")){
+            reader = new BufferedReader(new FileReader("/Users/olliedewar/Desktop/uni/Massey/Coding for Creative Practices/Assignment 2/2004.txt"));
+            return reader;
+        }
+        if(year.equals("2005")){
+            reader = new BufferedReader(new FileReader("/Users/olliedewar/Desktop/uni/Massey/Coding for Creative Practices/Assignment 2/2005.txt"));
+            return reader;
+        }
+        return null;
+    }
+}
