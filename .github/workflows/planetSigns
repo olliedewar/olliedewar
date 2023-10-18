@@ -1,0 +1,115 @@
+import java.util.*;
+import java.io.*;
+import java.text.*;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/*** creates and returns list of planet signs ***/
+public class Planet {
+    //constants
+    private static final String[] PLANET_NAMES = {
+            "Mercury", "Venus", "Jupiter", "Mars",
+            "Saturn", "Uranus", "Neptune", "Pluto"
+        };
+    List<String> planets = new ArrayList<>();
+    SimpleDateFormat file;
+
+    public Planet() {
+        file = new SimpleDateFormat("MMM dd, yyyy");
+    }
+
+    //return list of planets
+    public List<String> getPlanets(String userBirthday) {
+        planets.clear();
+        Date formatted = new Date();
+
+        try {
+            //format userBirthday for file reading
+            String formattedDate = convertDateFormat(userBirthday);
+            try
+            {
+                formatted = file.parse(formattedDate);
+            }
+            catch (ParseException pe)
+            {
+                pe.printStackTrace();
+            }
+            //System.out.println("Converted date is " + formattedDate); //debug
+
+            //loop through planet files
+            for (String planet : PLANET_NAMES){
+                planets.add(readFile(formatted, planet));
+                //System.out.println(planet);  //debug
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return planets;
+    }
+
+    public String convertDateFormat(String userBirthday) {
+        try {
+            //parse input date string
+            SimpleDateFormat user = new SimpleDateFormat("yyyy-MM-dd");
+            Date userDate = user.parse(userBirthday);
+            String formattedDate = file.format(userDate);
+            //System.out.println("Formatted Date: " + formattedDate);     //debugg
+            return formattedDate;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null; //handle parsing errors
+        }
+    }
+
+    //read planet files
+    public String readFile(Date userBirthday, String planet) throws IOException {
+        String sign = "";
+        String returnString = "";
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(
+                        "/Users/olliedewar/Desktop/uni/Massey/Coding for Creative Practices/Assignment 2/" + planet + ".txt"));
+            String line;
+
+            //look for sign
+            while ((line = reader.readLine()) != null) {
+                //System.out.println(line); //debug
+                String[] parts = line.split("\t");
+                String part = parts[0];
+                //System.out.println(parts[0]); //debug
+
+                //System.out.println(parts[0]); //debug
+                if (parts.length >= 2) {
+                    try {
+                        Date date = file.parse(part);
+
+                        //if before, store sign
+                        if (date.before(userBirthday)) {sign = parts[1];}
+
+                        //if after, break
+                        if(date.after(userBirthday)) {
+                            returnString = planet + ": " + sign;
+                            break;
+                        }
+                    }
+                    catch (ParseException pe) {
+                        pe.printStackTrace();
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Check if returnString is null or empty before returning
+        if (returnString != null && !returnString.isEmpty()) {
+            return returnString;
+        } else {
+            return "No information available for your " + planet + " sign.";
+        }
+    }
+}
