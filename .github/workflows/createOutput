@@ -48,19 +48,23 @@ public class createOutput extends JPanel {
         /** set line width **/
         float thickness = 4;
         g2d.setStroke(new BasicStroke(thickness));
-        
+
         /** font size and style **/
-        Font font = new Font("Arial", Font.PLAIN, 25); // Change "Arial" to the desired font and 20 to the desired font size
+        Font font = new Font("Arial", Font.PLAIN, 20); 
         g2d.setFont(font);
-        int xText = 10; // X-coordinate for text
-        int yText = 10; // Y-coordinate for text
+        int xText = 20; 
+        int yText = 10; 
+
+        /** set background colour **/
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
 
         /** loop through star chart and draw relevant circles **/
         for(String s : allSigns){
             /** assign circle color **/
             //System.out.println(s);   //debug
             size = loopCount * 40;
-            
+
             String line[] = s.split(" ");
             String sign;
             if(line.length > 2){
@@ -68,10 +72,10 @@ public class createOutput extends JPanel {
                 //System.out.println("node checked: " + sign);   //debug
             }else sign = line[1];
             //System.out.println(sign);   //debug
-            
+
             if(sign.equals("Aries")){ 
                 g2d.setColor(aries);
-                
+
                 for(int j = 0; j < circles; j++){
                     int x = r.nextInt(maxX - min + 1);
                     int y = r.nextInt(maxY - min + 1);
@@ -81,7 +85,7 @@ public class createOutput extends JPanel {
                 }
             }else if(sign.equals("Taurus")){
                 g2d.setColor(taurus);
-                
+
                 for(int j = 0; j < circles; j++){
                     int x = r.nextInt(maxX - min + 1);
                     int y = r.nextInt(maxY - min + 1);
@@ -101,7 +105,7 @@ public class createOutput extends JPanel {
                 }
             }else if(sign.equals("Cancer")){
                 g2d.setColor(cancer);
-                
+
                 for(int j = 0; j < circles; j++){
                     int x = r.nextInt(maxX - min + 1);
                     int y = r.nextInt(maxY - min + 1);
@@ -111,7 +115,7 @@ public class createOutput extends JPanel {
                 }
             }else if(sign.equals("Leo")){
                 g2d.setColor(leo);
-                
+
                 for(int j = 0; j < circles; j++){
                     int x = r.nextInt(maxX - min + 1);
                     int y = r.nextInt(maxY - min + 1);
@@ -121,7 +125,7 @@ public class createOutput extends JPanel {
                 }
             }else if(sign.equals("Virgo")){
                 g2d.setColor(virgo);
-                
+
                 for(int j = 0; j < circles; j++){
                     int x = r.nextInt(maxX - min + 1);
                     int y = r.nextInt(maxY - min + 1);
@@ -131,7 +135,7 @@ public class createOutput extends JPanel {
                 }
             }else if(sign.equals("Libra")){
                 g2d.setColor(libra);
-                
+
                 for(int j = 0; j < circles; j++){
                     int x = r.nextInt(maxX - min + 1);
                     int y = r.nextInt(maxY - min + 1);
@@ -141,7 +145,7 @@ public class createOutput extends JPanel {
                 }
             }else if(sign.equals("Scorpio")){
                 g2d.setColor(scorpio);
-                
+
                 for(int j = 0; j < circles; j++){
                     int x = r.nextInt(maxX - min + 1);
                     int y = r.nextInt(maxY - min + 1);
@@ -151,7 +155,7 @@ public class createOutput extends JPanel {
                 }
             }else if(sign.equals("Sagittarius")){
                 g2d.setColor(sagittarius);
-                
+
                 for(int j = 0; j < circles; j++){
                     int x = r.nextInt(maxX - min + 1);
                     int y = r.nextInt(maxY - min + 1);
@@ -161,7 +165,7 @@ public class createOutput extends JPanel {
                 }
             }else if(sign.equals("Capricorn")){
                 g2d.setColor(capricorn);
-                
+
                 for(int j = 0; j < circles; j++){
                     int x = r.nextInt(maxX - min + 1);
                     int y = r.nextInt(maxY - min + 1);
@@ -171,7 +175,7 @@ public class createOutput extends JPanel {
                 }
             }else if(sign.equals("Aquarius")){
                 g2d.setColor(aquarius);
-                
+
                 for(int j = 0; j < circles; j++){
                     int x = r.nextInt(maxX - min + 1);
                     int y = r.nextInt(maxY - min + 1);
@@ -181,7 +185,7 @@ public class createOutput extends JPanel {
                 }
             }else if(sign.equals("Pisces")){
                 g2d.setColor(pisces);
-                
+
                 for(int j = 0; j < circles; j++){
                     int x = r.nextInt(maxX - min + 1);
                     int y = r.nextInt(maxY - min + 1);
@@ -192,14 +196,25 @@ public class createOutput extends JPanel {
             }
             loopCount--;
         }
-        
-        for(String s : allSigns){
-            /** add text **/
-            g2d.setColor(Color.BLACK);
-            yText = yText + 25;
-            g2d.drawString(s, xText, yText);
-        }
 
+        for(String s : allSigns){
+            /** add text and rectangle **/
+            g2d.setColor(Color.WHITE);
+            yText = yText + 24;
+            String text = s;
+            FontMetrics fm = g2d.getFontMetrics();
+            int textWidth = fm.stringWidth(text);
+            int textHeight = fm.getHeight();
+            int rectX = xText - 5; // set x
+            int rectY = yText - textHeight + 5; // set y
+            int rectWidth = textWidth + 10; // adjust width
+            int rectHeight = textHeight; // set height
+
+            g2d.fillRect(rectX, rectY, rectWidth, rectHeight); // draw rectangle
+
+            g2d.setColor(Color.BLACK); 
+            g2d.drawString(text, xText, yText);
+        }
     }
 
     public void createArt(String userBirthday, java.util.List<String> allSigns) {
