@@ -1,0 +1,57 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/*** returns sun sign ***/
+
+public class Sun {
+    //ranges for sun sign
+    private static final String[][] SIGN_DATES = {
+        {"03-21", "04-19"}, // Aries
+        {"04-20", "05-20"}, // Taurus
+        {"05-21", "06-20"}, // Gemini
+        {"06-21", "07-22"}, // Cancer
+        {"07-23", "08-22"}, // Leo
+        {"08-23", "09-22"}, // Virgo
+        {"09-23", "10-22"}, // Libra
+        {"10-23", "11-21"}, // Scorpio
+        {"11-22", "12-21"}, // Sagittarius
+        {"12-22", "01-19"}, // Capricorn
+        {"01-20", "02-18"}, // Aquarius
+        {"02-19", "03-20"}  // Pisces
+    };
+
+    public String determineSunSign(String userBirthday) {
+        /** format input data **/
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date birthday = dateFormat.parse(userBirthday);
+            String monthDay = new SimpleDateFormat("MM-dd").format(birthday);
+
+            /** find birthday in range **/
+            for (int i = 0; i < SIGN_DATES.length; i++) {
+                String[] signRange = SIGN_DATES[i];
+                Date startDate = dateFormat.parse(userBirthday.substring(0, 5) + signRange[0]);
+                Date endDate = dateFormat.parse(userBirthday.substring(0, 5) + signRange[1]);
+
+                /** return sign when found **/
+                if (birthday.compareTo(startDate) >= 0 && birthday.compareTo(endDate) <= 0) {
+                    return getZodiacSign(i);
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return "null";
+    }
+
+    /** make list of sign names to compare to **/
+    private String getZodiacSign(int index) {
+        String[] signNames = {
+                "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
+                "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
+            };
+        return signNames[index];
+    }
+}
