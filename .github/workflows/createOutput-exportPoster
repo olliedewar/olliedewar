@@ -223,7 +223,7 @@ public class createOutput extends JPanel {
 
         int low = 19;
         int high = 7440;
-        int low2 = 10;
+        int low2 = 25;
         int high2 = 60;
 
         String[] dmy = userBirthday.split("-"); //split yyyy-mm-dd into (yyyy)(mm)(dd)
